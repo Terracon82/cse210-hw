@@ -4,61 +4,68 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Prep2 World!");
+        // Initial prompt for grade percentage
+        Console.Write("What is your grade Percentage? ");
+        float gradePercentage = float.Parse(Console.ReadLine());
 
-        //Primitive types
-        int i;
-        long l;
-        float f;
-        double d;
-        char c;
-        string s;
-        byte b;
-        bool b2;
-
-
-        //Variables
-        int myCount = 4;
-        // myCount = "bob"; //This does not work.
-        string aName = "bob";
-
-
-        //var
-        var anotherCount = 4;
-        // anotherCount = 3.4; //This also does not work.
-
-
-
-        //Printing Variables
-        Console.Write("What's your age? ");
-
-
-
-        //ReadLine
-        var ageString = Console.ReadLine();
-        System.Console.WriteLine($"My age is {ageString}."); // use cw + TAB for System.Console.WriteLine // Use $ at beginning of sting to evaluate variables in the string.
-        System.Console.WriteLine($"My age is " + ageString + ".");
-
-
-
-        //Converting Variables
-        int age = int.Parse(ageString);
-
-
-
-        //Conditionals
-        if (age < 18)
-            System.Console.WriteLine("You're a minor"); //C# does not care about whitespace or newlines.
-        System.Console.WriteLine("This string prints regardless");
-
-        if (age > 18)
+        // Logic to determine grade letter
+        string gradeLetter = "undefined value";
+        if (gradePercentage >= 90)
         {
-            System.Console.WriteLine("You're not a minor"); //Use brackets to form blocks of code.
-            System.Console.WriteLine("This string only prints if you are old.");
+            gradeLetter = "A";
+        }
+        else if (gradePercentage >= 80)
+        {
+            gradeLetter = "B";
+        }
+        else if (gradePercentage >= 70)
+        {
+            gradeLetter = "C";
+        }
+        else if (gradePercentage >= 60)
+        {
+            gradeLetter = "D";
+        }
+        else if (gradePercentage < 60)
+        {
+            gradeLetter = "F";
         }
 
+        // Grade sign logic (+ or -)
+        string gradeSign = "";
+        if (gradePercentage % 10 > 7 && gradeLetter != "A" && gradeLetter != "F") 
+        {
+            gradeSign = "+";
+        }
+        else if (gradePercentage % 10 < 3 && gradeLetter != "F")
+        {
+            gradeSign = "-";
+        }
 
+        // Print statement with logic to determine whether to use "a" or "an"
+        var anGrades = new List<string>() { "A", "F" };
+        if (anGrades.Contains(gradeLetter))
+        {
+            Console.WriteLine($"You scored an {gradeLetter}{gradeSign}");
+        }
+        else
+        {
+            Console.WriteLine($"You scored a {gradeLetter}{gradeSign}");
+        }
 
-        //Operators
+        // Logic and print statement determining whether the class was passed.
+        var passingGrades = new List<string>() { "A", "B", "C" };
+        if (passingGrades.Contains(gradeLetter))
+        {
+            Console.Write("Congrats! You survived the course!");
+            Thread.Sleep(1000);
+            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+            Console.WriteLine("Congrats! You passed the course!");
+        }
+        else
+        {
+            Console.WriteLine("You failed. Better luck next time.");
+        }
+
     }
 }
