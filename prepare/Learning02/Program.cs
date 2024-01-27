@@ -4,46 +4,29 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Learning02 World!");
+        // Console.WriteLine("Hello Learning02 World!");
 
-        var carList = new List<Car>();
+        Job job1 = new(
+            _company: "Microsoft"
+            , _jobTitle: "Software Enfineer"
+            , _startYear: 2019
+            , _endYear: 2022
+            );
 
-        Car carInstance1 = new("Honda", "Civic", 12, 30);
-            // Car carInstance2 = new();
-            // var carInstance3 = new Car();
+        Job job2 = new(
+            _company: "Apple"
+            , _jobTitle: "Manager"
+            , _startYear: 2022
+            , _endYear: 2023
+            );
+        // job1._jobTitle = "Software Enfineer";
 
-
-        Person owner = new()
-        {
-            name = "Jeff",
-            phone = "1234567890"
-        };
-        carInstance1.owner = new Person();
-
-        carList.Add(carInstance1);
-
-        carInstance1 = new Car
-        (
-            "Ford",
-            "F-150",
-            18,
-            25
-        );
-
-        owner = new()
-        {
-            name = "Jeff",
-            phone = "1234567890"
-        };
-        carInstance1.owner = new Person();
-
-        carList.Add(carInstance1);
+        Resume resume1 = new();
+        resume1._name = "Allision Rose";
+        resume1._jobs.Add(job1);
+        resume1._jobs.Add(job2);
 
 
-        foreach (var c in carList)
-        {
-            // System.Console.WriteLine($"{c.make}, {c.model}: total range = {c.TotalRange()}");
-            c.DisplayData();
-        }
+        resume1.Display();
     }
 }
