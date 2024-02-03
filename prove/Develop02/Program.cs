@@ -10,11 +10,16 @@ class Program
 
     static void Main(string[] args)
     {
+        // System.Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
         Console.WriteLine("Welcome to the journal!");
         Journal myJournal = new();
 
-        myJournal.CreateEntry();
+        myJournal.JournalMenu();
 
-        myJournal.DisplayJournal();
+        // // System.Console.WriteLine(myJournal._optionsText);
+
+        // myJournal.CreateEntry();
+
+        // System.Console.WriteLine("\n" + myJournal.DisplayJournal());
     }
 }

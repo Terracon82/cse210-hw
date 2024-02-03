@@ -1,13 +1,15 @@
 using System.Runtime.CompilerServices;
 
-class Entry
+class JournalEntry
 {
     public string date;
     public string prompt;
     public string response;
 
+    private static string _delimeter = "~~!~withinEntryDelimeter~!1t3759U6827j0kO7~~";
+
     // public Entry(string date, string prompt, string response)
-    public Entry(Dictionary<string, string> entryDict)
+    public JournalEntry(Dictionary<string, string> entryDict)
     {
         this.date = entryDict["date"];
         this.prompt = entryDict["prompt"];
@@ -28,7 +30,7 @@ class Entry
         return prompts[index];
     }
 
-    public static Entry CreateEntry()
+    public static JournalEntry CreateEntry()
     {
         string prompt = RandomPrompt();
         System.Console.WriteLine(prompt);
@@ -48,18 +50,35 @@ class Entry
             , {"prompt", prompt}
             , {"response", response}
         };
-        Entry newEntry = new(entryDict);
+        JournalEntry newEntry = new(entryDict);
 
         return newEntry;
     }
 
-    public void DisplayEntry()
+    public string DisplayEntry()
     {
-        System.Console.WriteLine(date);
-        System.Console.WriteLine(prompt);
-        System.Console.WriteLine(response);
-        System.Console.WriteLine("");
+        // System.Console.WriteLine(date);
+        // System.Console.WriteLine(prompt);
+        // System.Console.WriteLine(response);
+        // System.Console.WriteLine("");
+
+        return date + "\n" + prompt + "\n" + response;
     }
 
+    public string ExportEntry()
+    {
+        return date + _delimeter + prompt + _delimeter + response;
+    }
+    public static JournalEntry LoadEntry(string importText)
+    {
+        Dictionary<string, string> loadedEntryDict = new()
+        {
+            {"date", importText.Split(_delimeter)[0]}
+            , {"prompt", importText.Split(_delimeter)[1]}
+            , {"response", importText.Split(_delimeter)[2]}
+        };
+        JournalEntry loadedEntry = new(loadedEntryDict);
+        return loadedEntry;
+    }
 
 }
