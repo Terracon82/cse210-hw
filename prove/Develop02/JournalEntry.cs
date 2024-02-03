@@ -18,9 +18,14 @@ class JournalEntry
 
     public static List<string> prompts = new()
     {
-        "What was the most memorable things that happened today?"
+        "What was the most memorable thing that happened today?"
         , "What was the best thing you did for someone today?"
-        , "Was there anything that reminded you of the beauty of life today?"
+        , "What is something that reminds you of the beauty of life?"
+        , "Who was the most interesting person you interacted with today?"
+        , "What was the best part of your day?"
+        , "How did you see the hand of the Lord in my life today?"
+        , "What was the strongest emotion you felt today?"
+        , "If you had one thing you could do over today, what would it be?"
     };
 
     public static string RandomPrompt()
@@ -32,11 +37,45 @@ class JournalEntry
 
     public static JournalEntry CreateEntry()
     {
-        string prompt = RandomPrompt();
-        System.Console.WriteLine(prompt);
-        string response = Console.ReadLine();
         string date = DateTime.Now.ToString("M/d/yyyy");
 
+        string prompt = RandomPrompt();
+
+        bool choosingPromt = true;
+        do
+        {
+        System.Console.WriteLine(prompt);
+        System.Console.WriteLine(
+            """
+
+            Do you like this prompt?
+                Press enter: Keep this prompt
+                1: Generate new prompt
+                2: Create custom prompt
+
+            """
+        );
+        string promptChoice = Console.ReadLine();
+        if (promptChoice == "1")
+        {
+            prompt = RandomPrompt();
+
+        }
+        else if (promptChoice == "2")
+        {
+            System.Console.WriteLine("Write your custom prompt:\n");
+            prompt = Console.ReadLine();
+        }
+        else
+        {
+            choosingPromt = false;
+        }
+        } while (choosingPromt);
+
+        System.Console.WriteLine("Response:\n");
+        string response = Console.ReadLine();
+
+        // // Alternate way to create an Entry
         // Entry newEntry = new(date, prompt, response);
         // Entry newEntry = new();
         // newEntry.date = date;
@@ -57,11 +96,6 @@ class JournalEntry
 
     public string DisplayEntry()
     {
-        // System.Console.WriteLine(date);
-        // System.Console.WriteLine(prompt);
-        // System.Console.WriteLine(response);
-        // System.Console.WriteLine("");
-
         return date + "\n" + prompt + "\n" + response;
     }
 

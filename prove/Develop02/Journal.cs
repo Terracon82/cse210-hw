@@ -54,11 +54,6 @@ class Journal
     {
         JournalEntry newEntry = JournalEntry.CreateEntry();
         entries.Add(newEntry);
-        // List<Entry> entries = new()
-        // {
-        //     newEntry
-        // };
-        // return entries;
     }
 
     public void DisplayJournal()
@@ -66,10 +61,9 @@ class Journal
         string displayText = "";
         foreach (JournalEntry entry in entries)
         {
-            displayText += "Entry:\n" + entry.DisplayEntry();
+            displayText += "\n" + "Entry:\n" + entry.DisplayEntry();
         }
         System.Console.WriteLine(displayText);
-        // return displayText;
     }
 
     public string ExportJournal()
