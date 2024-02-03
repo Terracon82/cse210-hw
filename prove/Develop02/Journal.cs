@@ -12,18 +12,19 @@ class Journal
         {
             string optionsText =
             """
+            Select one of the following:
 
-            0: Quit Journal
             1: New Entry
             2: Display Journal
             3: Save Journal
             4: Load Journal
+            5: Quit Journal
 
             """;
 
             System.Console.WriteLine(optionsText);
             string choice = Console.ReadLine();
-            if (choice == "0")
+            if (choice == "5")
             {
                 loopJournal = false;
             }
@@ -61,7 +62,12 @@ class Journal
         string displayText = "";
         foreach (JournalEntry entry in entries)
         {
-            displayText += "\n" + "Entry:\n" + entry.DisplayEntry();
+            displayText += 
+            $"""
+
+            {entry.DisplayEntry()}
+            """;
+            // "\n" + "Entry:\n" + entry.DisplayEntry();
         }
         System.Console.WriteLine(displayText);
     }

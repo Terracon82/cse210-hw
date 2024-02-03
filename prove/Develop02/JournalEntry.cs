@@ -96,7 +96,15 @@ class JournalEntry
 
     public string DisplayEntry()
     {
-        return date + "\n" + prompt + "\n" + response;
+        // return "Date: " + date + "---" + "Prompt: " + prompt + "\n" + "Response:" + "\n" + response;
+        return 
+        $"""
+
+        Date: {date} --- Prompt: {prompt}
+        Response:
+        {response}
+        
+        """;
     }
 
     public string ExportEntry()
