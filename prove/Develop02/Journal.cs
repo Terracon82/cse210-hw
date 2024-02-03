@@ -2,7 +2,7 @@ using System.Reflection.Metadata.Ecma335;
 
 class Journal
 {
-    public List<JournalEntry> entries = new();
+    public List<JournalEntry> _entries = new();
     private string _delimeter = "~~!~betweenEntryDelimeter~!1as5DG813Y99K86Lf~~";
 
     public void JournalMenu()
@@ -54,15 +54,15 @@ class Journal
     public void CreateEntry()
     {
         JournalEntry newEntry = JournalEntry.CreateEntry();
-        entries.Add(newEntry);
+        _entries.Add(newEntry);
     }
 
     public void DisplayJournal()
     {
         string displayText = "";
-        foreach (JournalEntry entry in entries)
+        foreach (JournalEntry entry in _entries)
         {
-            displayText += 
+            displayText +=
             $"""
 
             {entry.DisplayEntry()}
@@ -75,10 +75,10 @@ class Journal
     public string ExportJournal()
     {
         string exportText = "";
-        for (int index = 0; index < entries.Count; index++) 
+        for (int index = 0; index < _entries.Count; index++)
         {
-            exportText += entries[index].ExportEntry();
-            if (index < entries.Count - 1)
+            exportText += _entries[index].ExportEntry();
+            if (index < _entries.Count - 1)
             {
                 exportText += _delimeter;
             }
@@ -101,7 +101,7 @@ class Journal
 
         foreach (var entryText in importText.Split(_delimeter))
         {
-            this.entries.Add(JournalEntry.LoadEntry(entryText));
+            this._entries.Add(JournalEntry.LoadEntry(entryText));
         }
 
     }

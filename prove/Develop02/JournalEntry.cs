@@ -2,18 +2,18 @@ using System.Runtime.CompilerServices;
 
 class JournalEntry
 {
-    public string date;
-    public string prompt;
-    public string response;
+    public string _date;
+    public string _prompt;
+    public string _response;
 
     private static string _delimeter = "~~!~withinEntryDelimeter~!1t3759U6827j0kO7~~";
 
     // public Entry(string date, string prompt, string response)
     public JournalEntry(Dictionary<string, string> entryDict)
     {
-        this.date = entryDict["date"];
-        this.prompt = entryDict["prompt"];
-        this.response = entryDict["response"];
+        this._date = entryDict["date"];
+        this._prompt = entryDict["prompt"];
+        this._response = entryDict["response"];
     }
 
     public static List<string> prompts = new()
@@ -44,9 +44,9 @@ class JournalEntry
         bool choosingPromt = true;
         do
         {
-        System.Console.WriteLine(prompt);
-        System.Console.WriteLine(
-            """
+            System.Console.WriteLine(prompt);
+            System.Console.WriteLine(
+                """
 
             Do you like this prompt?
                 Press enter: Keep this prompt
@@ -54,22 +54,22 @@ class JournalEntry
                 2: Create custom prompt
 
             """
-        );
-        string promptChoice = Console.ReadLine();
-        if (promptChoice == "1")
-        {
-            prompt = RandomPrompt();
+            );
+            string promptChoice = Console.ReadLine();
+            if (promptChoice == "1")
+            {
+                prompt = RandomPrompt();
 
-        }
-        else if (promptChoice == "2")
-        {
-            System.Console.WriteLine("Write your custom prompt:\n");
-            prompt = Console.ReadLine();
-        }
-        else
-        {
-            choosingPromt = false;
-        }
+            }
+            else if (promptChoice == "2")
+            {
+                System.Console.WriteLine("Write your custom prompt:\n");
+                prompt = Console.ReadLine();
+            }
+            else
+            {
+                choosingPromt = false;
+            }
         } while (choosingPromt);
 
         System.Console.WriteLine("Response:\n");
@@ -97,19 +97,19 @@ class JournalEntry
     public string DisplayEntry()
     {
         // return "Date: " + date + "---" + "Prompt: " + prompt + "\n" + "Response:" + "\n" + response;
-        return 
+        return
         $"""
 
-        Date: {date} --- Prompt: {prompt}
+        Date: {_date} --- Prompt: {_prompt}
         Response:
-        {response}
+        {_response}
         
         """;
     }
 
     public string ExportEntry()
     {
-        return date + _delimeter + prompt + _delimeter + response;
+        return _date + _delimeter + _prompt + _delimeter + _response;
     }
     public static JournalEntry LoadEntry(string importText)
     {
