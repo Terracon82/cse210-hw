@@ -5,6 +5,8 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welcome to the journal!");
+
+        // Initialize new class
         Journal myJournal = new();
         myJournal.JournalMenu();
 
