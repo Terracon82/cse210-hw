@@ -79,12 +79,13 @@ class ScripturePassage
 
     public void MemorizeScripturePassage()
     {
+        Console.Clear();
         DisplayScripture();
         while (_allVersesHidden == false)
         {
-            // Console.Clear();
             HideWords();
             Console.ReadLine();
+            Console.Clear();
             DisplayScripture();
         }
         Console.ReadLine();
