@@ -81,13 +81,21 @@ class ScripturePassage
     {
         Console.Clear();
         DisplayScripture();
+        Console.Write("\nPress enter to continue or type 'quit' to finish: ");
+        string continueLoop = Console.ReadLine();
         while (_allVersesHidden == false)
         {
             HideWords();
-            Console.ReadLine();
+
             Console.Clear();
             DisplayScripture();
+            Console.Write("\nPress enter to continue or type 'quit' to finish: ");
+            continueLoop = Console.ReadLine();
+
+            if (continueLoop == "quit")
+            {
+                break;
+            }
         }
-        Console.ReadLine();
     }
 }
