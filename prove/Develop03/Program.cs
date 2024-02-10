@@ -14,7 +14,7 @@ class Program
         """;
 
         ScripturePassage scripturePassage = new(referenceText, scripturePassageText);
-
-        scripturePassage.DisplayScripture();
+        
+        scripturePassage.MemorizeScripturePassage();
     }
 }

@@ -2,6 +2,7 @@ class Word
 {
     private string _text;
     private bool _hidden = false;
+    public bool Hidden { get { return _hidden; } }
 
     public Word(string text)
     {

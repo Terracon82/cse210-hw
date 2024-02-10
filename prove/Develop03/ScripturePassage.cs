@@ -4,6 +4,9 @@ class ScripturePassage
     // private string _text;
     private List<Verse> _verses = new();
     // public string Text { get { return _text; } set { _text = value; } }
+    private double _hideWordsProportion = 0.1;
+    private bool _allVersesHidden = false;
+    private List<int> _visibleVerseIndices = new();
 
     public ScripturePassage(string reference, string text)
     {
@@ -16,10 +19,15 @@ class ScripturePassage
             Verse verse = new(verseTextList[i]);
             _verses.Add(verse);
         }
+
+        _visibleVerseIndices = _verses.Select((verse, index) => new { verse, index })
+        .Where(pair => !pair.verse.AllWordsHidden)
+        .Select(pair => pair.index)
+        .ToList();
     }
 
     // Returns the display string for the scripture passage.
-    public string GetScripture()
+    private string GetScripture()
     {
         string outputString = "";
         for (int i = 0; i < _verses.Count; i++)
@@ -48,5 +56,37 @@ class ScripturePassage
             {this.GetScripture()}
             """
         );
+    }
+
+    private void HideWords()
+    {
+        foreach (int index in _visibleVerseIndices)
+        {
+            _verses[index].HideWords(_hideWordsProportion);
+        }
+
+        _visibleVerseIndices = _verses.Select((verse, index) => new { verse, index })
+        .Where(pair => !pair.verse.AllWordsHidden)
+        .Select(pair => pair.index)
+        .ToList();
+
+        if (_visibleVerseIndices.Count == 0)
+        {
+            _allVersesHidden = true;
+            return;
+        }
+    }
+
+    public void MemorizeScripturePassage()
+    {
+        DisplayScripture();
+        while (_allVersesHidden == false)
+        {
+            // Console.Clear();
+            HideWords();
+            Console.ReadLine();
+            DisplayScripture();
+        }
+        Console.ReadLine();
     }
 }
