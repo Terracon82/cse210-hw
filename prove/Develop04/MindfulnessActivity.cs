@@ -3,17 +3,20 @@ using System.Runtime.InteropServices;
 
 class MindfulnessActivity
 {
-    private List<int> _acitvityDurations = new(); // In seconds
+    private List<int> _acitvityDurations = new(); // Historical list of durations in seconds
 
     protected string _activityTitle;
     protected string _activityDescription;
+    private int _getReadyDuration;
 
 
     public MindfulnessActivity(
         string activityTitle = "Mindfulness"
         , string activityDescription = ""
+        , int getReadyDuration = 5
     )
     {
+        _getReadyDuration = getReadyDuration;
         _activityTitle = activityTitle;
         _activityDescription = activityDescription;
 
@@ -44,9 +47,11 @@ class MindfulnessActivity
             $"""
             Well done!
 
-            You have completed another {(int)(_acitvityDurations.Last() * 1000)} seconds of the {_activityTitle} Activity.
+            You have completed another {(int)(_acitvityDurations.Last())} seconds of the {_activityTitle} Activity.
             """
             );
+            IdleAnimation.DisplaySpinner(5);
+            System.Console.WriteLine();
         }
         else
         {
@@ -54,14 +59,20 @@ class MindfulnessActivity
         }
     }
 
-    public void StartMindfulnessActivity(Action<int> Activity)
+    protected void StartMindfulnessActivity(Action<int> Activity)
     {
         DisplayStartMessage();
 
         System.Console.Write("How long, in seconds, would you like for your session? ");
         int duration = int.Parse(System.Console.ReadLine());
+        _acitvityDurations.Add(duration); // Recording for historical purposes
 
-        _acitvityDurations.Add(duration);
+        System.Console.Clear();
+
+        System.Console.WriteLine("Get ready...");
+        IdleAnimation.DisplaySpinner(_getReadyDuration);
+        // System.Console.Write("\b \b");
+        System.Console.WriteLine();
 
         Activity(duration);
 

@@ -24,11 +24,17 @@ static class IdleAnimation
 
     static public void DisplayCountdown(int seconds)
     {
-        for (int i = seconds; i > seconds; i--)
+        for (int i = seconds; i >= 1; i--)
         {
             System.Console.Write(i);
             Thread.Sleep(1000);
-            System.Console.Write("\b \b");
+
+            string backspaceString = new('\b', i.ToString().Length);
+            string whitespaceString = new(' ', i.ToString().Length);
+
+            System.Console.Write(backspaceString);
+            System.Console.Write(whitespaceString);
+            System.Console.Write(backspaceString);
         }
     }
 

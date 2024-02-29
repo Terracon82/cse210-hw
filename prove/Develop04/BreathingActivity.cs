@@ -2,7 +2,6 @@ class BreathingActivity : MindfulnessActivity
 {
     // This is a list of lists. The sublist will have 4 elements: Breathe in duration, hold breath duration, breathe out duration, hold breath duration.
     private List<int> _breathingPattern = new();
-    private int _getReadyDuration;
     private int _concludingDuration;
 
     public BreathingActivity(
@@ -21,9 +20,9 @@ class BreathingActivity : MindfulnessActivity
     ) : base(
         activityTitle
         , activityDescription
+        , getReadyDuration
     )
     {
-        _getReadyDuration = getReadyDuration;
         _breathingPattern.Add(breatheInDuration);
         _breathingPattern.Add(HoldBreathDuration);
         _breathingPattern.Add(breatheOutDuration);
@@ -31,34 +30,54 @@ class BreathingActivity : MindfulnessActivity
         _concludingDuration = concludingDuration;
     }
 
-    public void StartBreathingActivty(duration)
+    private void DoBreathingActivty(int duration)
     {
-        System.Console.WriteLine("Get ready...");
-        IdleAnimation.DisplaySpinner(_getReadyDuration);
+        int iterations = (int)(((double)duration / (double)_breathingPattern.Sum()) + 0.5);
+        int iterationCount = 0;
+
+        do
+        {
+            DisplayBreatheInCountdown(_breathingPattern[0]);
+            DisplayHoldBreathCountdown(_breathingPattern[1]);
+            DisplayBreatheOutCountdown(_breathingPattern[2]);
+            DisplayHoldEmptyCountdown(_breathingPattern[3]);
+            System.Console.WriteLine();
+
+            iterationCount++;
+        } while (iterationCount < iterations);
+    }
+
+    public void StartBreathingActivty()
+    {
+        base.StartMindfulnessActivity(DoBreathingActivty);
     }
 
     private void DisplayBreatheInCountdown(int duration)
     {
-        System.Console.WriteLine("Breathe in...");
-        IdleAnimation.DisplayCountdown(duration)
+        System.Console.Write("Breathe in...");
+        IdleAnimation.DisplayCountdown(duration);
+        System.Console.WriteLine();
     }
 
     private void DisplayHoldBreathCountdown(int duration)
     {
-        System.Console.WriteLine("Hold breath...");
-        IdleAnimation.DisplayCountdown(duration)
+        System.Console.Write("Hold breath...");
+        IdleAnimation.DisplayCountdown(duration);
+        System.Console.WriteLine();
     }
 
     private void DisplayBreatheOutCountdown(int duration)
     {
-        System.Console.WriteLine("Breathe out...");
-        IdleAnimation.DisplayCountdown(duration)
+        System.Console.Write("Breathe out...");
+        IdleAnimation.DisplayCountdown(duration);
+        System.Console.WriteLine();
     }
 
     private void DisplayHoldEmptyCountdown(int duration)
     {
-        System.Console.WriteLine("Hold empty...");
-        IdleAnimation.DisplayCountdown(duration)
+        System.Console.Write("Hold empty...");
+        IdleAnimation.DisplayCountdown(duration);
+        System.Console.WriteLine();
     }
 
 
