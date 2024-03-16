@@ -1,28 +1,30 @@
 class ChecklistGoal : Goal
 {
+    static readonly public new string _goalTypeID = "5678";
     int _numberOfTimesItNeedsToBeCompleted = 1;
     int _bonusPointAmount = 0;
 
-    public ChecklistGoal(Goal goal, int numberOfTimesItNeedsToBeCompleted, int bonusPointAmount) : base(goal.GoalName, goal.GoalDescription, goal.PointValue)
+    public ChecklistGoal()
+    
     {
-        _numberOfTimesItNeedsToBeCompleted = numberOfTimesItNeedsToBeCompleted;
-        _bonusPointAmount = bonusPointAmount;
-    }
-
-    override public ChecklistGoal CreateGoal()
-    {
-        Goal goal = base.CreateGoal();
+        base.CreateGoal();
 
         System.Console.Write("How many times does this goal need to be accomplished? ");
-        int numberOfTimesItNeedsToBeCompleted = int.Parse(System.Console.ReadLine());
+        _numberOfTimesItNeedsToBeCompleted = int.Parse(System.Console.ReadLine());
         System.Console.WriteLine();
 
         System.Console.Write("What is the bonus for completeing the goal? ");
-        int bonusPointAmount = int.Parse(System.Console.ReadLine());
+        _bonusPointAmount = int.Parse(System.Console.ReadLine());
         System.Console.WriteLine();
-
-        return new ChecklistGoal(goal, numberOfTimesItNeedsToBeCompleted, bonusPointAmount);
+        
     }
+
+    // override public ChecklistGoal CreateGoal()
+    // {
+    //     Goal goal = base.CreateGoal();
+
+    //     return new ChecklistGoal(goal, numberOfTimesItNeedsToBeCompleted, bonusPointAmount);
+    // }
 
     public override int GetScore()
     {

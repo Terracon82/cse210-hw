@@ -1,16 +1,12 @@
 class SimpleGoal : Goal
 {
+    static readonly public new string _goalTypeID = "1234";
     private bool _isComplete = false;
     public bool IsComplete { get { return _isComplete; } }
 
-    public SimpleGoal(Goal goal) : base(goal.GoalName, goal.GoalDescription, goal.PointValue)
+    public SimpleGoal()
     {
-
-    }
-
-    override public SimpleGoal CreateGoal()
-    {
-        return new SimpleGoal(base.CreateGoal());
+        base.CreateGoal();
     }
 
     public override int GetScore()

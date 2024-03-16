@@ -6,6 +6,7 @@ class Program
     {
         Console.WriteLine("Hello Eternal Quest!");
 
-        
+        User user = new();
+        user.EternalQuest();
     }
 }
