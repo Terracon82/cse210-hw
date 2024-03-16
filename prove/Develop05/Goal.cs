@@ -3,18 +3,19 @@ class Goal
     static readonly public string _goalTypeID = "0000";
     // static readonly public string _delimeterGoalTypeID = "-+=+-";
     // static public string GoalTypeID { get { return _goalTypeID; } }
-    private static string _delimeter = "~-~-~-~";
+    protected static string _delimeter = "~-~-~-~";
 
     protected string _goalName;
-    // public string GoalName { get { return _goalName; } }
+    public string GoalName { get { return _goalName; } }
 
     protected string _goalDescription;
-    // public string GoalDescription { get { return _goalDescription; } }
+    public string GoalDescription { get { return _goalDescription; } }
 
     protected int _pointValue;
-    // public int PointValue { get { return _pointValue; } }
-    protected int _numberOfTimesCompleted = 0;
+    public int PointValue { get { return _pointValue; } }
 
+    protected int _numberOfTimesCompleted = 0;
+    public int NumberOfTimesCompleted { get { return _numberOfTimesCompleted; } }
 
     public Goal()
     { }
@@ -56,12 +57,14 @@ class Goal
         {_goalDescription}
         Point Value: {_pointValue}
         Score: {GetScore()}
+
+
         """;
     }
 
     virtual public string ExportGoal()
     {
-        return _goalTypeID + _delimeter
+        return _delimeter
         + _goalName + _delimeter
         + _goalDescription + _delimeter
         + _pointValue + _delimeter
@@ -69,12 +72,19 @@ class Goal
         ;
     }
 
-    public static Goal ImportGoal(string goalText)
+    public static Goal ImportGoal(string goalText
+    // , string goalTypeID = ""
+    )
     {
-        if (_goalTypeID != goalText.Split(_delimeter)[0])
-        {
-            throw new WrongGoalTypeID("Incompatible goalTypeID");
-        }
+        // if (goalTypeID == "")
+        // {
+        //     goalTypeID = _goalTypeID;
+        // }
+
+        // if (goalTypeID != goalText.Split(_delimeter)[0])
+        // {
+        //     throw new WrongGoalTypeID("Incompatible goalTypeID");
+        // }
 
         string goalName = goalText.Split(_delimeter)[1];
         string goalDescription = goalText.Split(_delimeter)[2];
@@ -85,9 +95,9 @@ class Goal
     }
 
 }
-    public class WrongGoalTypeID : Exception
+public class WrongGoalTypeID : Exception
+{
+    public WrongGoalTypeID(string message) : base(message)
     {
-        public WrongGoalTypeID(string message) : base(message)
-        {
-        }
     }
+}

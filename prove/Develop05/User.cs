@@ -149,17 +149,36 @@ class User
                     // , BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy
                     // );
 
-                    // var invokeStuff = method.Invoke(null, new object[] { goalText });
+                    // var stuffToInvoke = new object[] { goalText
+                    //             // , goalText
+                    //             // .Split(systemGoalType
+                    //             //     .GetField("_delimeter")
+                    //             //     .GetValue(null).ToString()
+                    //             // )
+                    //             // .ToList()[0]
+                    //         };
+
+                    // var invokeStuff = method.Invoke(null, stuffToInvoke);
 
 
                     _goals.Add(
                         (Goal)systemGoalType
                         .GetMethod("ImportGoal", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                        .Invoke(null, new object[] { goalText })
+                        .Invoke(null, new object[] { goalText
+                                // , goalText
+                                // .Split(typeof(Goal)
+                                //     .GetField("_delimeter")
+                                //     .GetValue(null).ToString()
+                                // )
+                                // .ToList()[0]
+                            }
+                        )
                         );
                 }
-                catch (WrongGoalTypeID)
-                { }
+                catch (Exception wg)
+                {
+                    System.Console.WriteLine(wg);
+                }
             }
         }
     }

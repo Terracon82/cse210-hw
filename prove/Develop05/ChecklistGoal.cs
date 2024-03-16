@@ -5,7 +5,6 @@ class ChecklistGoal : Goal
     int _bonusPointAmount = 0;
 
     public ChecklistGoal()
-    
     {
         base.CreateGoal();
 
@@ -18,6 +17,12 @@ class ChecklistGoal : Goal
         System.Console.WriteLine();
         
     }
+
+    public ChecklistGoal(Goal goal, int numberOfTimesItNeedsToBeCompleted, int bonusPointAmount) : base(goal.GoalName, goal.GoalDescription, goal.PointValue, goal.NumberOfTimesCompleted)
+    { 
+        _numberOfTimesItNeedsToBeCompleted = numberOfTimesItNeedsToBeCompleted;
+        _bonusPointAmount = bonusPointAmount;
+    }    
 
     // override public ChecklistGoal CreateGoal()
     // {
@@ -43,4 +48,30 @@ class ChecklistGoal : Goal
     {
         return base.GetDisplayString();
     }
+
+    public override string ExportGoal()
+    {
+        return _goalTypeID 
+        + base.ExportGoal() + _delimeter
+        + _numberOfTimesItNeedsToBeCompleted + _delimeter
+        + _bonusPointAmount
+        ;
+    }
+
+    public static new ChecklistGoal ImportGoal(string goalText
+    // , string goalTypeID = ""
+    )
+    {
+        if (_goalTypeID != goalText.Split(_delimeter)[0])
+        {
+            throw new WrongGoalTypeID("Incompatible goalTypeID");
+        }        
+        // goalTypeID = _goalTypeID;
+        return new ChecklistGoal(Goal.ImportGoal(goalText
+        // , _goalTypeID
+        )
+        , int.Parse(goalText.Split(_delimeter)[5])
+        , int.Parse(goalText.Split(_delimeter)[6])
+        );
+    }    
 }
