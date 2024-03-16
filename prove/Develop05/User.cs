@@ -161,19 +161,22 @@ class User
                     // var invokeStuff = method.Invoke(null, stuffToInvoke);
 
 
-                    _goals.Add(
-                        (Goal)systemGoalType
-                        .GetMethod("ImportGoal", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                        .Invoke(null, new object[] { goalText
-                                // , goalText
-                                // .Split(typeof(Goal)
-                                //     .GetField("_delimeter")
-                                //     .GetValue(null).ToString()
-                                // )
-                                // .ToList()[0]
-                            }
-                        )
-                        );
+                    Goal goal = (Goal)systemGoalType
+                    .GetMethod("ImportGoal", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                    .Invoke(null, new object[] { goalText
+                        // , goalText
+                        // .Split(typeof(Goal)
+                        //     .GetField("_delimeter")
+                        //     .GetValue(null).ToString()
+                        // )
+                        // .ToList()[0]
+                        }
+                    );
+
+                    if (goal != null)
+                    {
+                        _goals.Add(goal);
+                    }
                 }
                 catch (Exception wg)
                 {

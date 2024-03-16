@@ -43,15 +43,19 @@ class SimpleGoal : Goal
     // , string goalTypeID = ""
     )
     {
-        if (_goalTypeID != goalText.Split(_delimeter)[0])
+        if (_goalTypeID == goalText.Split(_delimeter)[0])
         {
-            throw new WrongGoalTypeID("Incompatible goalTypeID");
-        }
+            // throw new WrongGoalTypeID("Incompatible goalTypeID");
 
         // goalTypeID = _goalTypeID;
         return new SimpleGoal(Goal.ImportGoal(goalText
         // , _goalTypeID
         )
         );
+        }
+        else
+        {
+            return null;
+        }
     }
 }

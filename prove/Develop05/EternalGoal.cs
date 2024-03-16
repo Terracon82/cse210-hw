@@ -7,7 +7,7 @@ class EternalGoal : Goal
     }
 
     public EternalGoal(Goal goal) : base(goal.GoalName, goal.GoalDescription, goal.PointValue, goal.NumberOfTimesCompleted)
-    { }    
+    { }
 
     // override public EternalGoal CreateGoal()
     // {
@@ -24,7 +24,7 @@ class EternalGoal : Goal
     public override string GetDisplayString()
     {
         return base.GetDisplayString();
-    }    
+    }
 
     public override string ExportGoal()
     {
@@ -35,13 +35,18 @@ class EternalGoal : Goal
     // , string goalTypeID = ""
     )
     {
-        if (_goalTypeID != goalText.Split(_delimeter)[0])
+        if (_goalTypeID == goalText.Split(_delimeter)[0])
         {
-            throw new WrongGoalTypeID("Incompatible goalTypeID");
-        }        
-        // goalTypeID = _goalTypeID;
-        return new EternalGoal(Goal.ImportGoal(goalText
-        // , _goalTypeID
-        ));
-    }    
+            // throw new WrongGoalTypeID("Incompatible goalTypeID");
+
+            // goalTypeID = _goalTypeID;
+            return new EternalGoal(Goal.ImportGoal(goalText
+            // , _goalTypeID
+            ));
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

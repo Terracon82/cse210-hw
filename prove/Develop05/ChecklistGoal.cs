@@ -62,10 +62,9 @@ class ChecklistGoal : Goal
     // , string goalTypeID = ""
     )
     {
-        if (_goalTypeID != goalText.Split(_delimeter)[0])
+        if (_goalTypeID == goalText.Split(_delimeter)[0])
         {
-            throw new WrongGoalTypeID("Incompatible goalTypeID");
-        }        
+            // throw new WrongGoalTypeID("Incompatible goalTypeID");
         // goalTypeID = _goalTypeID;
         return new ChecklistGoal(Goal.ImportGoal(goalText
         // , _goalTypeID
@@ -73,5 +72,10 @@ class ChecklistGoal : Goal
         , int.Parse(goalText.Split(_delimeter)[5])
         , int.Parse(goalText.Split(_delimeter)[6])
         );
+        }  
+        else 
+        {
+            return null;
+        }      
     }    
 }
