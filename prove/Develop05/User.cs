@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using Microsoft.VisualBasic;
 using System.Reflection;
 
 class User
@@ -55,6 +52,7 @@ class User
                     break;
                 case "2":
                     System.Console.WriteLine(ListGoals());
+                    System.Console.WriteLine();
                     break;
                 case "1":
                     CreateGoal();
@@ -99,9 +97,9 @@ class User
     public string ListGoals()
     {
         string displayString = "";
-        foreach (Goal goal in _goals)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            displayString += goal.GetDisplayString();
+            displayString += i + 1 + ". " + _goals[i].GetDisplayString() + "\n";
         }
 
         return displayString;
@@ -143,8 +141,6 @@ class User
 
             foreach (Type systemGoalType in _goalTypes)
             {
-                try
-                {
                     // var method = systemGoalType.GetMethod("ImportGoal"
                     // , BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy
                     // );
@@ -176,18 +172,24 @@ class User
                     if (goal != null)
                     {
                         _goals.Add(goal);
+                        _totalPoints += goal.GetScore();
                     }
-                }
-                catch (Exception wg)
-                {
-                    System.Console.WriteLine(wg);
-                }
             }
         }
     }
 
     public void RecordEvent()
     {
+        System.Console.WriteLine("The goals are:");
+        System.Console.WriteLine(ListGoals());
+        System.Console.Write("Which goal did you accomplish? ");
+        int userInput = int.Parse(System.Console.ReadLine());
+        System.Console.WriteLine();
 
+        int pointsEarned = _goals[userInput - 1].Accomplishment();
+        _totalPoints += pointsEarned;
+
+        System.Console.WriteLine($"Congratulations! You have earned {pointsEarned} points!");
+        System.Console.WriteLine();
     }
 }

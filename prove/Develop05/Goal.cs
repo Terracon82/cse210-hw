@@ -1,9 +1,16 @@
+using System.ComponentModel.Design;
+
 class Goal
 {
-    static readonly public string _goalTypeID = "0000";
+    static protected string _goalTypeID = "0000";
+    public virtual string GoalTypeID { get { return "0000"; } set { } }
     // static readonly public string _delimeterGoalTypeID = "-+=+-";
     // static public string GoalTypeID { get { return _goalTypeID; } }
-    protected static string _delimeter = "~-~-~-~";
+    protected static string _delimeter = "~---~";
+
+    protected virtual string CompletionIcon { get { return " "; } set { } }
+
+    public Guid GoalID { get; private set; }
 
     protected string _goalName;
     public string GoalName { get { return _goalName; } }
@@ -18,10 +25,14 @@ class Goal
     public int NumberOfTimesCompleted { get { return _numberOfTimesCompleted; } }
 
     public Goal()
-    { }
-
-    public Goal(string goalName, string goalDescription, int pointValue, int numberOfTimesCompleted)
     {
+        GoalID = Guid.NewGuid();
+        CreateGoal();
+    }
+
+    public Goal(Guid goalID, string goalName, string goalDescription, int pointValue, int numberOfTimesCompleted)
+    {
+        GoalID = goalID;
         _goalName = goalName;
         _goalDescription = goalDescription;
         _pointValue = pointValue;
@@ -50,21 +61,29 @@ class Goal
         return _pointValue * _numberOfTimesCompleted;
     }
 
-    virtual public string GetDisplayString()
+    virtual public int Accomplishment()
     {
-        return $"""
-        {_goalName}
-        {_goalDescription}
-        Point Value: {_pointValue}
-        Score: {GetScore()}
+        _numberOfTimesCompleted += 1;
+        return _pointValue;
+    }
+
+    public string GetDisplayString()
+    {
+        // return $"""
+        // {_goalName}
+        // {_goalDescription}
+        // Point Value: {_pointValue}
+        // Score: {GetScore()}
 
 
-        """;
+        // """;
+        return $"[{CompletionIcon}]({GetScore()} points) {_goalName} ({_goalDescription})";
     }
 
     virtual public string ExportGoal()
     {
-        return _delimeter
+        return GoalTypeID + _delimeter
+        + GoalID.ToString() + _delimeter
         + _goalName + _delimeter
         + _goalDescription + _delimeter
         + _pointValue + _delimeter
@@ -76,28 +95,13 @@ class Goal
     // , string goalTypeID = ""
     )
     {
-        // if (goalTypeID == "")
-        // {
-        //     goalTypeID = _goalTypeID;
-        // }
+            Guid goalID = Guid.Parse(goalText.Split(_delimeter)[1]);
+            string goalName = goalText.Split(_delimeter)[2];
+            string goalDescription = goalText.Split(_delimeter)[3];
+            int pointValue = int.Parse(goalText.Split(_delimeter)[4]);
+            int numberOfTimesCompleted = int.Parse(goalText.Split(_delimeter)[5]);
 
-        // if (goalTypeID != goalText.Split(_delimeter)[0])
-        // {
-        //     throw new WrongGoalTypeID("Incompatible goalTypeID");
-        // }
-
-        string goalName = goalText.Split(_delimeter)[1];
-        string goalDescription = goalText.Split(_delimeter)[2];
-        int pointValue = int.Parse(goalText.Split(_delimeter)[3]);
-        int numberOfTimesCompleted = int.Parse(goalText.Split(_delimeter)[4]);
-
-        return new Goal(goalName, goalDescription, pointValue, numberOfTimesCompleted);
+            return new Goal(goalID, goalName, goalDescription, pointValue, numberOfTimesCompleted);
     }
 
-}
-public class WrongGoalTypeID : Exception
-{
-    public WrongGoalTypeID(string message) : base(message)
-    {
-    }
 }
