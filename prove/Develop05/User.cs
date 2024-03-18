@@ -1,3 +1,4 @@
+using System.IO.Enumeration;
 using System.Reflection;
 
 class User
@@ -110,6 +111,8 @@ class User
         System.Console.WriteLine("What is your filename? ");
         _fileName = System.Console.ReadLine();
 
+        LoadGoals(_fileName);
+
         string exportString = "";
         for (int i = 0; i < _goals.Count; i++)
         {
@@ -123,58 +126,62 @@ class User
         Filemanager.SaveText(exportString, _fileName);
     }
 
-    public void LoadGoals()
+    public void LoadGoals(string fileName = "")
     {
-        System.Console.WriteLine("What is your filename? ");
-        _fileName = System.Console.ReadLine();
+        if (fileName == "")
+        {
+            // Select file
+            System.Console.WriteLine("What is your filename? ");
+            _fileName = System.Console.ReadLine();
+        }
+        else
+        {
+            _fileName = fileName;
+        }
 
+        // Load file and split into a list
         string importString = Filemanager.LoadText(_fileName);
         List<string> goalTextList = importString.Split(_delimeter).ToList();
 
+        // Load goals from list
         foreach (string goalText in goalTextList)
         {
-            // string goalTypeID = goalText
-            //     .Split(typeof(Goal)
-            //     .GetField("_delimeterGoalTypeID")
-            //     .GetValue(null).ToString())
-            //     .ToList()[0];
-
+            // Check each goal to match it to type of goal
             foreach (Type systemGoalType in _goalTypes)
             {
-                    // var method = systemGoalType.GetMethod("ImportGoal"
-                    // , BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy
-                    // );
+                // Attempt to import goal as each type of goal. If it does not match it returns null.
+                Goal goal = (Goal)systemGoalType
+                .GetMethod("ImportGoal", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                .Invoke(null, new object[] { goalText }
+                );
 
-                    // var stuffToInvoke = new object[] { goalText
-                    //             // , goalText
-                    //             // .Split(systemGoalType
-                    //             //     .GetField("_delimeter")
-                    //             //     .GetValue(null).ToString()
-                    //             // )
-                    //             // .ToList()[0]
-                    //         };
-
-                    // var invokeStuff = method.Invoke(null, stuffToInvoke);
-
-
-                    Goal goal = (Goal)systemGoalType
-                    .GetMethod("ImportGoal", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                    .Invoke(null, new object[] { goalText
-                        // , goalText
-                        // .Split(typeof(Goal)
-                        //     .GetField("_delimeter")
-                        //     .GetValue(null).ToString()
-                        // )
-                        // .ToList()[0]
+                // If the goal was of the correct type:
+                if (goal != null)
+                {
+                    // Check if the goal already exists in the user's session.
+                    bool alreadyExists = false;
+                    for (int i = 0; i < _goals.Count; i++)
+                    {
+                        if (goal.GoalID == _goals[i].GoalID)
+                        {
+                            alreadyExists = true;
                         }
-                    );
+                    }
 
-                    if (goal != null)
+                    // If the goal does not already exist, it is added to the user's session.
+                    if (!alreadyExists)
                     {
                         _goals.Add(goal);
-                        _totalPoints += goal.GetScore();
                     }
+                }
             }
+        }
+
+        // Recalculate total points.
+        _totalPoints = 0;
+        foreach (Goal goal in _goals)
+        {
+            _totalPoints += goal.GetScore();
         }
     }
 
