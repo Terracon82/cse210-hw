@@ -24,6 +24,7 @@ class Program
         foreach (Video video in videos)
         {
             System.Console.WriteLine(video.DisplayString);
+            System.Console.WriteLine(video.GetDisplayStringComments());
         }
 
     }
@@ -39,8 +40,8 @@ class Program
 
         for (int i = 1; i <= numVideos; i++)
         {
-            title = $"Example Title {i}";
-            author = $"Example Author {i}";
+            title = $"Example Video Title {i}";
+            author = $"Example Video Author {i}";
             length = random.Next(24);
 
             videos.Add(new Video(title, author, length));
@@ -59,8 +60,8 @@ class Program
 
         for (int i = 1; i <= numComments; i++)
         {
-            author = $"Example Author {i}";
-            text = $"Example Text {i}";
+            author = $"Example Comment Author {i}";
+            text = $"Example Comment Text {i}";
 
             comments.Add(new Comment(author, text));
         }

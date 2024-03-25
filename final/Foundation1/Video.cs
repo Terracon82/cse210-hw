@@ -15,7 +15,7 @@ class Video
                 {_title} - {_author}
                 {_length} minutes
                 {NumComments} comments
-                
+
                 """
                 ;
         }
@@ -31,5 +31,17 @@ class Video
     public void AddComment(Comment comment)
     {
         _comments.Add(comment);
+    }
+
+    public string GetDisplayStringComments()
+    {
+        string displayString = "";
+
+        foreach (Comment comment in _comments)
+        {
+            displayString += comment.DisplayString;
+        }
+
+        return displayString;
     }
 }
