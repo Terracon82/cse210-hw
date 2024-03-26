@@ -1,49 +1,47 @@
 using System;
+using System.Numerics;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Learning02 World!");
+        // The BigInteger may be unnecessary, but it shouldn't hurt.
+        // do you have such things as longs in C#? (BigIntegers are immutable in Java, that's why I worried)
 
-        var carList = new List<Car>();
+        // I don't think so. These are arbitrarily long. So there is no worry of size. Well, only the worry of my hardware.
+        // I'm double checking now.
+        // Oh, I missed the completion. 
 
-        Car carInstance1 = new("Honda", "Civic", 12, 30);
-            // Car carInstance2 = new();
-            // var carInstance3 = new Car();
+        // Largest starting num: 837799
+        // Largest sequence length: 524
 
+        // Is this correct?
+        
+        long largestStartingNum = 1;
+        long largestSequenceLength = 1;
 
-        Person owner = new()
+        for (int i = 1; i <= 1000000; i++)
         {
-            name = "Jeff",
-            phone = "1234567890"
-        };
-        carInstance1.owner = new Person();
+            long myNumber = i;
+            long sequenceLength = 0;
 
-        carList.Add(carInstance1);
+            while (myNumber != 1)
+            {
+                if (myNumber % 2 == 0) { myNumber /= 2; }
+                else { myNumber = (myNumber * 3) + 1; }
 
-        carInstance1 = new Car
-        (
-            "Ford",
-            "F-150",
-            18,
-            25
-        );
+                sequenceLength += 1;
+            } // in programming, this is what we call a staircase.. :) - Keep coding silly
 
-        owner = new()
-        {
-            name = "Jeff",
-            phone = "1234567890"
-        };
-        carInstance1.owner = new Person();
-
-        carList.Add(carInstance1);
-
-
-        foreach (var c in carList)
-        {
-            // System.Console.WriteLine($"{c.make}, {c.model}: total range = {c.TotalRange()}");
-            c.DisplayData();
+            if (sequenceLength > largestSequenceLength)
+            {
+                largestSequenceLength = sequenceLength;
+                largestStartingNum = i;
+            }
         }
-    }
+
+        System.Console.WriteLine($"Largest starting num: {largestStartingNum}");
+        System.Console.WriteLine($"Largest sequence length: {largestSequenceLength}");
+        // c + w + TAB
+    } // mine's: s o u t+tab
 }
