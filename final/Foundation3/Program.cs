@@ -8,7 +8,7 @@ class Program
 
         List<Address> addresses = CreateAddresses(3);
 
-        List<Event> events = new List<Event>
+        List<Event> events = new()
         {
             new Lecture("Example Lecture Title", "This is very descriptive lecture.", "Sometime before yesterday and after tomorrow", "High noon", addresses[0], "The wise old man found on the side of the road.", 7)
             , new Reception("Example Reception Title", "This is very descriptive lecture.", "Sometime before yesterday and after tomorrow", "High noon", addresses[1], "FakeEmail@notmail.com")
