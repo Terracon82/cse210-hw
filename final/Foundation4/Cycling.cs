@@ -7,5 +7,5 @@ class Cycling : Activity
     public Cycling(string date, double duration, double speed) : base(date, duration)
     {
         _speed = speed;
-    }    
+    }
 }

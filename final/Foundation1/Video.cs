@@ -21,6 +21,21 @@ class Video
         }
     }
 
+    public string DisplayStringComments
+    {
+        get
+        {
+            string displayString = "";
+
+            foreach (Comment comment in _comments)
+            {
+                displayString += comment.DisplayString;
+            }
+
+            return displayString;
+        }
+    }
+
     public Video(string title, string author, int length)
     {
         _title = title;
@@ -31,17 +46,5 @@ class Video
     public void AddComment(Comment comment)
     {
         _comments.Add(comment);
-    }
-
-    public string GetDisplayStringComments()
-    {
-        string displayString = "";
-
-        foreach (Comment comment in _comments)
-        {
-            displayString += comment.DisplayString;
-        }
-
-        return displayString;
     }
 }

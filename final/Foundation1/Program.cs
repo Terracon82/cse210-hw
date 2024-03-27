@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-
 class Program
 {
     static void Main(string[] args)
@@ -24,7 +21,7 @@ class Program
         foreach (Video video in videos)
         {
             System.Console.WriteLine(video.DisplayString);
-            System.Console.WriteLine(video.GetDisplayStringComments());
+            System.Console.WriteLine(video.DisplayStringComments);
         }
 
     }
@@ -36,7 +33,6 @@ class Program
         string author = "";
         int length = 0;
         Random random = new();
-
 
         for (int i = 1; i <= numVideos; i++)
         {
@@ -50,13 +46,11 @@ class Program
         return videos;
     }
 
-
     static List<Comment> CreateComments(int numComments)
     {
         List<Comment> comments = new();
         string author = "";
         string text = "";
-
 
         for (int i = 1; i <= numComments; i++)
         {
